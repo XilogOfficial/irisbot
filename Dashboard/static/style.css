@@ -1,0 +1,374 @@
+html {
+	font-size: 13px;
+}
+@media screen and (min-width: 800px) { html { font-size: 15px; } }
+@media screen and (min-width: 1200px) { html { font-size: 17px; } }
+@media screen and (min-width: 1600px) { html { font-size: 20px; } }
+@media screen and (min-width: 2000px) { html { font-size: 24px; } }
+
+body {
+    background-color:white;
+    margin: 0;
+    padding: 0;
+    color: #363636;
+}
+
+
+
+
+
+h1 {
+	font-size: 3.5em;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2.5em;
+	text-align: center;
+}
+
+h3 {
+	font-size: 1.9em;
+}
+
+h4 {
+	font-size: 1.7em;
+}
+
+p {
+	font-size: 1.5em;
+}
+
+p2 {
+	font-size: 1.4em;
+}
+
+p3 {
+	font-size: 1.3em;
+}
+
+.box {
+    box-shadow: 0 2.5px 5px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0, 0.2);
+}
+
+
+
+
+
+/* target nav bar */
+nav {
+    display: flex;
+    max-width: 100%;
+    max-height: 3.5em;
+    background: rgba(255,255,255,0.35);
+    align-items: center;
+    justify-content: left;
+    padding: 0 15px;
+}
+/* target tab */
+nav a {
+    display: block;
+    height: 100%;
+	background: rgba(255,255,255,0);
+    font-size: 1.5rem;
+    color: #363636;
+	padding: 5px 15px;
+    text-decoration: none;
+	-webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+/* hover over tab */
+nav a:hover {
+	background: rgba(255,255,255,0.2);
+    text-decoration: none;
+    color: #363636;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+}
+/* target image inside nav logo */
+nav a#navlogo img {
+    border-radius: 999px;
+    width: 2.7rem;
+    height: auto;
+}
+/* nav menu button for mobile */
+nav .menu {
+	height: auto;
+	max-height: 3em;
+	width: 100%;
+	background: rgba(255,255,255,0);
+	font-size: 3rem;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+}
+
+
+
+
+
+
+.hero {
+    width: 100%;
+    height: 50vh;
+    text-align: center;
+    background: url("background.jpg");
+    background-size: cover;
+    background-position: 50% 50%;
+    color: white;
+}
+.hero .logo {
+    height: 50%;
+    width: auto;
+    border-radius: 50%;
+    margin-top: 2%;
+    transition: 0.5s;
+}
+.hero .logo:hover {
+    border-radius: 20%;
+}
+.hero .heading {
+    font-weight: 100;
+}
+
+
+
+
+
+
+hr.divider {
+	height: 2px;
+    width: 50%;
+	border-radius: 999px;
+	-webkit-border-radius: 2.5px;
+	margin: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	background: #888888;
+}
+
+
+
+
+
+
+.section {
+	width: 100%;
+	padding-left: 7vw;
+	padding-right: 7vw;
+	margin: auto;
+	margin-bottom: 3em;
+}
+
+.content {
+	width: 100%;
+	text-align: left;
+	padding-top: 3em;
+	padding-bottom: 3em;
+	background-color: white;
+}
+
+.footer {
+	height: auto;
+	width: auto;
+	background: #eeeeee;
+	padding: 3vw;
+	padding-top: 40px;
+	padding-bottom: 40px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+
+
+
+
+
+.control-panel {
+    width: 90%;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+/* targets setting panel */
+#settings {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+#menu {
+    margin-right: 10px;
+    padding: 10px 0;
+    border-radius: 5px;
+}
+#menu a {
+    display: block;
+    height: auto;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: #363636;
+    padding: 6px 10px;
+    background-color: transparent;
+    transition: 0.5s;
+    cursor: pointer;
+}
+#menu a:hover, #menu a.active {
+    color: white;
+    background-color: #99AAB5;
+}
+#menu a.active {
+    cursor: default;
+}
+#menu .separator {
+    color: darkslategray;
+    border-bottom: 1px solid darkslategray;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+
+.user {
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-bottom: 15px; margin-top: 15px;
+    overflow: hidden; /* this makes the container resize to fit a floated element, why? idk */
+}
+.user .title {
+    font-size: 1.4rem
+}
+.user .strike {
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.user .strike .title {
+    font-size: 1.3rem
+}
+
+.guild {
+    font-size: 1.2rem;
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-bottom: 10px; margin-top: 10px;
+    cursor: pointer;
+    overflow: hidden; /* this makes the container resize to fit a floated element, why? idk */
+}
+.guild .title {
+    font-size: 1.8rem
+}
+
+.info-card {
+    padding: 1rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+}
+.info-card .title {
+    font-size: 2rem;
+    font-weight: 400;
+	text-align: center;
+}
+
+.avatar {
+    float: left;
+    margin-right: 10px;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+.avatar.small {
+    width: 4rem;
+    height: 4rem;
+}
+.avatar.small:hover {
+    border-radius: 20%;
+}
+
+
+
+
+
+.overlay {
+	position: fixed;
+	z-index: 99999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	background: rgba(0, 0, 0, 0.8);
+}
+.overlay .popup {
+	position: absolute;
+	width: 80%;
+    height: auto;
+    padding: 20px;
+    background-color:white;
+    border-radius: 5px;
+}
+
+
+
+
+
+input[type="button"], button {
+    padding: 4px 8px;
+    font-size: 1.4em;
+    color: #363636;
+    border-radius: 5px;
+    border: 1px solid #363636;
+    background: white;
+    -webkit-transition: 0.5s;
+	transition: 0.5s;
+}
+input[type="button"]:hover, button:hover, input[type="button"].active, button.active {
+    color: white;
+    background: #99AAB5;
+}
+
+select, select:focus {
+    font-size: 1.4em;
+    color: #363636;
+    border-radius: 5px;
+    border: 1px solid #363636;
+    background: white;
+    -webkit-transition: 0.5s;
+	transition: 0.5s;
+}
+select:hover {
+    color: white;
+    background: #99AAB5;
+}
+
+input[type="text"], input[type="number"], textarea {
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 4px 8px;
+    color: #363636;
+    border-radius: 5px;
+    border: 1px solid #363636;
+    background: white;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-overflow: clip;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+
+input[type="text"]:hover, input[type="number"]:hover, textarea:hover {
+    background: #99AAB5;
+}
+
+input[type="text"]:hover, input[type="number"]:hover, textarea:focus {
+    background: white;
+}

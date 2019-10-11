@@ -1,0 +1,92 @@
+<html>
+<head>
+    <title>Iris</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    
+    <script src="https://kit.fontawesome.com/926dde123c.js"></script>
+    <script>
+        $(function(){
+            $(".guild").click(function(event) {
+                window.location.href = `/dashboard/${event.target.id}`;
+            }).children().click(function(e) {
+                e.stopPropagation();
+                window.location.href = `/dashboard/${$(event.target).parent().attr('id')}`;
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="hero">
+        <nav>
+            <a id="navlogo" href=""><img src="/logo.png" alt="Logo" style="width: 1.5em; height: auto"></a>
+            <a href="/dashboard">Dashboard</a>
+            
+            <div class="menu" style="display: none"><i class="fas fa-bars"></i></div>
+        </nav>
+        
+        <img class="logo" src="/logo.png">
+        <h1 class="heading">Iris</h1>
+    </div>
+    
+    <div class="content">
+        <div class="section">
+            <h2>Features</h2>
+            <ul>
+                <p3>
+                    <li>Moderation/dashboard/utility. Iris packs every essential needed for you to run your server as it deserves.</li>
+                    <li>Iris packs every standard moderation feature, including strikes, timed mutes, bans and kicks.</li>
+                    <li>User info, server info, reminders, you name it. Iris also includes some useful utility features.</li>
+                    <li>A dashboard that can kick, ban and strike a member at your will. See and remove strikes and check your guild info. Setup the bot and configure it to your liking.</li>
+                </p3>
+            </ul>
+            <div class="row">
+                <div class="col info-card box">
+                    <div class="title"><i class="fas fa-shield-alt"></i></div>
+                    <p2>Popular moderation features such as strikes, bans and kicks.</p2>
+                </div>
+                <div class="col info-card box">
+                    <div class="title"><i class="fas fa-volume-mute"></i></div>
+                    <p2>Timed mutes to stop spammers in their tracks.</p2>
+                </div>
+                <div class="col info-card box">
+                    <div class="title"><i class="fas fa-tools"></i></div>
+                    <p2>Popular utility features such as guild/user info and reminders.</p2>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>The Stats</h2>
+            <!-- <img src="https://discordbots.org/api/widget/420654724535287809.svg"> -->
+            <div class="row">
+                <div class="col info-card box">
+                    <div class="title">Users</div>
+                    <h2><%= client.users.size %></h2>
+                </div>
+                <div class="col info-card box">
+                    <div class="title">Servers</div>
+                    <h2><%= client.guilds.size %></h2>
+                </div>
+                <div class="col info-card box">
+                    <div class="title">Channels</div>
+                    <h2><%= client.channels.size %></h2>
+                </div>
+            </div>
+        </div>
+        <div class="section" style="text-align: center">
+            <h2>Like it?</h2>
+            <a href="<%= config.invite %>">
+                <button><i class="fab fa-discord"></i> Add the bot!</button>
+            </a>
+            <a href="<%= config.support %>">
+                <button><i class="fab fa-discord"></i> Join the support server</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

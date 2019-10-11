@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>Iris Dashboard</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    
+    <script>
+        $(function(){
+            $(".strike").click(function(event) {
+                confirm($(event.target))
+            }).children().click(function(e) {
+                e.stopPropagation();
+                confirm($(event.target).parent());
+            });
+            
+            $('#no, #confirm-bg').on("click", function(){ // when no button or background clicked
+                $('#confirm-bg').animate({opacity: 0}, 300, function () { // this is run after the animation is complete
+                    $('#confirm-bg').css('display', 'none')
+                    $("#confirm > *:not('#buttons')").remove(); // lastly empty the menu except for yes/no buttons
+                });
+            });
+            $('#yes').on("click", function(){
+                $.post('/api/rmstrike', { user: user, strike: strike, id: $(document.body).data("guild") })
+                setTimeout(function(){
+                    location.reload();
+                }, 300); // reload after 300ms
+            });
+
+            $("#menu a").click(function(event) {
+                window.location.href = `/dashboard/${$(document.body).data('guild')}/${$(event.target).data('href')}`
+            });
+
+            function confirm(target) {
+                user = target.attr('id');
+                strike = $(target).data('strike');
+                $('#confirm').prepend(`<p2> Are you sure you want to remove this strike? <br> ${strike} given to ${user} </p2>`)
+                $('#confirm-bg').css({'display': 'flex', opacity: 0}).animate({opacity: 1}, 300);
+            }
+        });
+    </script>
+    
+    <%
+    users = [];
+
+    Object.keys(conf.strikes).forEach(id => { <!-- for each item in strikes in the guild config, set user to the member with strikes in question -->
+        usr = guild.members.get(id);
+        if (!usr) return;
+        users.push(usr.user)
+    })
+    %>
+</head>
+<body data-guild="<%= guild.id %>">
+    <% include ./templates/hero.html %>
+    
+    <div class="container control-panel">
+        <p>
+            Hello <%= user.username %>!
+        </p>
+        <div class="row">
+            <% include ./templates/menu.html %>
+            <script>$('#menu #strikes').addClass('active')</script>
+
+            <div id="settings" class="col-sm box">
+                <p2><%= guild.name %> has <%= guild.members.size %> members. <br></p2>
+            
+                <p2>Please click on a strike to remove.</p2>
+                <% users.forEach(item => { %>
+                    <%- include('./templates/userstrikes.ejs', { user: item, conf: conf }) %>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    
+    <% include ./templates/footer.html %>
+    
+    <div class="overlay" id="confirm-bg" style="display: none;">
+        <div class="popup" id="confirm">
+            <div id="buttons">
+                <input type="button" id="yes" value="Yes"> <input type="button" id="no" value="No">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

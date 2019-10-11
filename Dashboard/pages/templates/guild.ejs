@@ -1,0 +1,7 @@
+<div class="guild box" id="<%= guild.id %>">
+    <img class="avatar" src="<%= guild.iconURL %>">
+    <div class="title"><%= guild.name %></div>
+    <%= guild.id %>
+    <br>
+    <%= bot.guilds.get(guild.id).members.size %> Members
+</div>

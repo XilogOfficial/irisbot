@@ -1,0 +1,92 @@
+<html>
+<head>
+    <title>Iris Dashboard</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    
+    <script>
+        $(function(){
+            $(".set").click(function(event) {
+                setting = $(event.target).data('setting');
+                target =  $(event.target).data('target');
+                set(setting, $(target).val())
+            });
+
+            $(".dropdown").each(function( index, value ) {
+                $(this).val($(this).data("selected"))
+                // since select boxes are annoying and the preselected option is dynamic, for each select box that
+                // exists, select the option that is in the data-selected attribute (which can be dynamic)
+            });
+
+            $("#menu a").click(function(event) {
+                window.location.href = `/dashboard/${$(document.body).data('guild')}/${$(event.target).data('href')}`
+            });
+        });
+        
+        selectedGuild = "";
+        function set(setting, value) {
+            $.post('/api/set', { setting: setting, value: value, id: $(document.body).data('guild') })
+        }
+    </script>
+    
+    <%
+    channels = [];
+    guild.channels.forEach((c) => { <!--for every guild the user is in, check if the bot is in it and if user is owner of guild-->
+        if (c.type == "text" && c.permissionsFor(bot.user).has("SEND_MESSAGES"))
+            channels.push(`<option value="${c.id}">${c.name}</option>`); <!--then make an option html tag so it's a guild the user can select-->
+    })
+    %>
+</head>
+<body data-guild="<%= guild.id %>">
+    <% include ./templates/hero.html %>
+    
+    <div class="container control-panel">
+        <p>
+            Hello <%= user.username %>!
+        </p>
+        <div class="row">
+            <% include ./templates/menu.html %>
+            <script>$('#menu #setup').addClass('active')</script>
+            
+            <div id="settings" class="col-sm box">
+                <p2><%= guild.name %> has <%= guild.members.size %> members. <br></p2>
+                            
+                <hr class="divider">
+                
+                <p2>Prefix:</p2>
+                <input type="text" id="prefix" placeholder="=" size="4" value="<%= conf.prefix %>">
+                <input type="button" class="set" value="Set Prefix" data-setting="prefix" data-target="#prefix">
+                
+                <hr class="divider">
+                
+                <p2>Logs:</p2>
+                <select class="dropdown" id="logs" data-selected="<%= conf.logs %>">
+                    <%- channels.join(" ") %>
+                </select>
+                <input type="button" class="set" value="Set Logs" data-setting="logs" data-target="#logs">
+    
+                <br>
+                <p2>Welcome Channel:</p2>
+                <select class="dropdown" id="msgjoin" data-selected="<%= conf.msgJoin %>">
+                    <%- channels.join(" ") %>
+                </select>
+                <input type="button" class="set" value="Set Channel" data-setting="msgJoin" data-target="#msgjoin">
+    
+                <br>
+                <p2>Leave Channel:</p2>
+                <select class="dropdown" id="msgleave" data-selected="<%= conf.msgLeave %>">
+                    <%- channels.join(" ") %>
+                </select>
+                <input type="button" class="set" value="Set Channel" data-setting="msgLeave" data-target="#msgleave">
+            </div>
+        </div>
+    </div>
+    
+    <% include ./templates/footer.html %>
+</body>
+</html>

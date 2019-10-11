@@ -1,0 +1,132 @@
+<html>
+<head>
+    <title>Iris Dashboard</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+
+    <%
+        m = {};
+        guild.members.forEach((v,k) => {
+            m[k] = v;
+        })
+    %>
+
+    <script>
+        $(function(){
+            // when a member is clicked on, open a modal asking what kind of action to perform
+            $(".user").on("click", function(event) {
+                reasonPrompt($(event.target))
+            }).children().on("click", function(e) {
+                e.stopPropagation();
+                reasonPrompt($(event.target).parent());
+            });
+
+            
+
+            $('#close, #confirm-bg').on("click", function(){ // when close button or background clicked
+                $('#confirm-bg').animate({opacity: 0}, 300, function () { // this is run after the animation is complete
+                    $('#confirm-bg').css('display', 'none')
+                    $("#confirm > *:not('#buttons')").remove(); // lastly empty the menu except for yes/no buttons
+                });
+            });
+            $("#reason-bg, #no").on("click", function(e){ closeReason() })
+            // if cancel is clicked when reason modal appears, then close the modal
+            $('#reason-bg #reason').on("click", function(e){ e.stopPropagation() })
+            // dont fire a click event if the user clicks on anything except the close button or background
+
+
+
+            // when the user clicks on any button on the action prompt that is not the close button,
+            // it has to be an action button, so we may replace the prompt with the reason prompt
+            $("#confirm #buttons input:not('#close')").on("click", function(event){
+                action = event.target.id; // data-user is the ID of the user clicked which is added to #confirm
+                user = $(event.target).parents().find('#confirm').data('user');
+                reasonPrompt(); // ask user for a reason to perform action, eg strike or kick
+            });
+
+            // if the user clicks confirm on the reason prompt, fire all the stuff needed to do
+            // the desired action, such as sending post requests and checking if the input was valid
+            $("#reason #buttons #yes").on("click", function(event) {
+                reason = $("#reason input").val();
+                // run a function to perform that action
+                if (action == "strike" && !reason) return $('#reason .error').html('<p3>You have not entered a reason.</p3>');
+                if (action == "strike" && reason.length > 1000) return $('#reason .error').html('<p3>Please keep the reason under 1000 characters.</p3>');
+                closeReason();
+                $.post(`/api/${action}`, { user: user, reason: reason, id: $(document.body).data("guild") })
+                if (action !== "strike") // don't reload if the action is a strike since it updates nothing on the page
+                    setTimeout(function(){ location.reload(); }, 300); // reload after 300ms
+            });
+
+
+            $("#menu a").click(function(event) {
+                window.location.href = `/dashboard/${$(document.body).data('guild')}/${$(event.target).data('href')}`
+            });
+
+
+            function actionPrompt(target) { // runs when you click on a user
+                $('#confirm-bg').css({'display': 'flex', opacity: 0}).animate({opacity: 1}, 300);
+                $('#confirm').prepend(`<p2> What would you like to do with ${$(target).find('.title').html()}? </p2>`)
+                $('#confirm').attr('data-user', $(target).attr('id'));
+            }
+            function reasonPrompt() { // runs when you click on an action button
+                $('#confirm-bg').animate({opacity: 0}, 300, function () { // this is run after the animation is complete
+                    $('#confirm-bg').css('display', 'none')
+                    $("#confirm > *:not('#buttons')").remove(); // lastly empty the menu except for yes/no buttons
+                });
+                $('#reason-bg').css({'display': 'flex', opacity: 0}).animate({opacity: 1}, 300);
+            }
+            function closeReason() { // runs when you click on an action button
+                $('#reason-bg').animate({opacity: 0}, 300, function () { // this is run after the animation is complete
+                    $('#reason-bg').css('display', 'none')
+                    $("#reason .error").html(""); // remove any error message
+                });
+            }
+        });
+    </script>
+</head>
+<body data-guild="<%= guild.id %>">
+    <% include ./templates/hero.html %>
+    
+    <div class="container control-panel">
+        <p>
+            Hello <%= user.username %>!
+        </p>
+        <div class="row">
+            <% include ./templates/menu.html %>
+            <script>$('#menu #members').addClass('active')</script>
+            
+            <div id="settings" class="col-sm box">
+                <% for (var i in m) {  if (!m[i].user.bot) { %>
+                    <%- include('./templates/user.ejs', { member: m[i], conf: conf }) %>
+                <% } } %>
+            </div>
+        </div>
+    </div>
+    
+    <% include ./templates/footer.html %>
+
+    <div class="overlay" id="confirm-bg" style="display: none;">
+        <div class="popup" id="confirm">
+            <div id="buttons">
+                <input type="button" id="close" value="Close">
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="reason-bg" style="display: none;">
+        <div class="popup" id="reason">
+            <p2>Please enter a reason</p2>
+            <input type="text" style="width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box;">
+            <div id="buttons" style="margin-top: 10px;">
+                <input type="button" id="yes" value="Confirm"> <input type="button" id="no" value="Cancel">
+            </div>
+            <p3 class="error" style="color:red"></p3>
+        </div>
+    </div>
+</body>
+</html>

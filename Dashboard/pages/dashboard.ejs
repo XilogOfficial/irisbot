@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title>Iris Dashboard</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    
+    <script>
+        $(function(){
+            $(".set").click(function(event) {
+                setting = $(event.target).data('setting');
+                target =  $(event.target).data('target');
+                set(setting, $(target).val())
+            });
+
+            $(".dropdown").each(function( index, value ) {
+                $(this).val($(this).data("selected"))
+                // since select boxes are annoying and the preselected option is dynamic, for each select box that
+                // exists, select the option that is in the data-selected attribute (which can be dynamic)
+            });
+
+            $("#menu a").click(function(event) {
+                window.location.href = `/dashboard/${$(document.body).data('guild')}/${$(event.target).data('href')}`
+            });
+        });
+        
+        selectedGuild = "";
+        function set(setting, value) {
+            $.post('/set', { setting: setting, value: value, id: $(document.body).data('guild') })
+        }
+    </script>
+</head>
+<body data-guild="<%= guild.id %>">
+    <% include ./templates/hero.html %>
+    
+    <div class="container control-panel">
+        <p>
+            Hello <%= user.username %>!
+        </p>
+        <div class="row">
+            <% include ./templates/menu.html %>
+            <script>$('#menu #info').addClass('active')</script>
+            
+            <div id="settings" class="col-sm box">
+                <div>
+                    <div class="guild box">
+                        <img src="<%= guild.iconURL %>" class="avatar">
+                        <p><%= guild.name %></p>
+                    </div>
+                    <div class="row" style="margin:-0.5rem">
+                        <div class="col info-card box">
+                            <p>Owner</p>
+                            <p2>You! (<%= user.tag %>)</p2>
+                        </div>
+                        <div class="col info-card box">
+                            <p>Members</p>
+                            <p2><%= guild.members.size %> members</p2>
+                        </div>
+                        <div class="col-sm-5 info-card box">
+                            <p>Created</p>
+                            <p2><%= guild.createdAt.toUTCString() %></p2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <% include ./templates/footer.html %>
+</body>
+</html>

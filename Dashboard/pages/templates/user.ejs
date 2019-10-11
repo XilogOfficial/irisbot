@@ -1,0 +1,11 @@
+<div class="user box" id="<%= member.user.id %>" style="cursor: pointer">
+    <img class="avatar small" src="<%= member.user.avatarURL %>">
+    <div class="title"><%= member.user.tag %> (<%= member.user.id %>)</div>
+    <p2 style="color: <%= member.displayHexColor %>"><%= member.highestRole.name %></p2>
+
+    <input type="button" id="strike" value="Strike" <% if (message.member.highestRole.position <= member.highestRole.position && message.author.id !== message.guild.owner.user.id) { %> disabled <% } %>>
+
+    <input type="button" id="kick" value="Kick" <% if (!member.kickable) { %> disabled <% } %>>
+
+    <input type="button" id="ban" value="Ban" <% if (!member.bannable) { %> disabled <% } %>>
+</div>

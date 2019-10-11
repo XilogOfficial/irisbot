@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>Iris Dashboard</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    
+    <script>
+        $(function(){
+            $(".guild").click(function(event) {
+                window.location.href = `/dashboard/${event.target.id}`;
+            }).children().click(function(e) {
+                e.stopPropagation();
+                window.location.href = `/dashboard/${$(event.target).parent().attr('id')}`;
+            });
+        });
+    </script>
+
+    <%
+    guilds = [];
+    console.log(user.guilds)
+    if (!user || !user.guilds) return;
+    user.guilds.forEach(g => { <!--for every guild the user is in, check if the bot is in it and if user is an admin of guild-->
+        guild = bot.guilds.get(g.id);
+        if (guild && guild.members.get(user.id).hasPermission("ADMINISTRATOR"))
+            guilds.push(bot.guilds.get(g.id))
+    })
+    %>
+</head>
+<body>
+    <% include ./templates/hero.html %>
+
+    <div class="control-panel">
+        <p>
+            Hello <%= user.username %>!
+        </p>
+        
+        <div id="settings" class="box">
+            <% if (guilds.length == 0) { %>
+                <p2>You don't own any servers with Iris in them!</p2>
+            <% } else { %>
+                <p2>Select a guild.</p2>
+                <% guilds.forEach(item => { %>
+                    <%- include('./templates/guild.ejs', { guild: item }) %>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+    
+    <% include ./templates/footer.html %>
+</body>
+</html>

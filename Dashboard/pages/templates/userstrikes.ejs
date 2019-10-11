@@ -1,0 +1,15 @@
+<%
+usrStrikes = conf.strikes[user.id];
+if (Object.size(usrStrikes) == 0) return; <!-- if they don't have strikes don't add the HTML -->
+
+strikes = []; <!-- strikes of the user is empty, then for each strike under the user's object add an html element to strikes -->
+Object.keys(usrStrikes).forEach(item => {
+    strikes.push(`<div class="strike box" id="${user.id}" data-strike="${item}"><div class="title">${item} Issued by ${usrStrikes[item].user}</div>${usrStrikes[item].reason}</div>`)
+})
+%>
+
+<div class="user box">
+    <img class="avatar small" src="<%= user.avatarURL %>">
+    <div class="title"><%= user.tag %> (<%= user.id %>)</div>
+    <%- strikes.join(" ") %>
+</div>
