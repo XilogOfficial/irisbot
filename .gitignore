@@ -1,4 +1,7 @@
-# Logs
+#My entire config including the token
+config.js
+
+#Logs
 logs
 *.log
 npm-debug.log*
