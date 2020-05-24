@@ -1,6 +1,6 @@
 module.exports = {
-    token: "NDI0MTU5NzY4NDIxMzM1MDQw.XTg_2Q.lt1_lzd0mmIya5OeMjk4b2nCSiU",
-    dblToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQyMDY1NDcyNDUzNTI4NzgwOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTYzMDM1NDIwfQ.E_DGc4g4exvTctZr_QQd2-mSLv_PuBxwJopHBnjbwTY",
+    token: "It's not true I did not hit her I did not oh hi mark",
+    dblToken: "da-fake-LOL-XXXXDDDDDD-DBL BOT LIST TOKEN NOW CALLED TOP.GG",
     game: "",
     invite: "https://discordapp.com/oauth2/authorize?client_id=420654724535287809&scope=bot&permissions=268545110",
     support: "https://discord.gg/cXKVtT4",
