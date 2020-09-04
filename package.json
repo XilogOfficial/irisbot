@@ -17,7 +17,7 @@
     "fun-facts": "^1.0.0",
     "hastebin-generator": "^1.1.4",
     "helmet": "^3.18.0",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "memorystore": "^1.6.1",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
